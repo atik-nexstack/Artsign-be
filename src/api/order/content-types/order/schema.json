@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order",
+    "description": "Orders created after quote approval"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "order_number": {
+      "type": "uid",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "assigned",
+        "in_progress",
+        "completed",
+        "cancelled",
+        "issue_reported"
+      ],
+      "default": "assigned"
+    },
+    "quote_request": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::quote-request.quote-request",
+      "inversedBy": "order"
+    },
+    "contractor": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::contractor.contractor"
+    },
+    "assigned_date": {
+      "type": "datetime"
+    },
+    "completion_date": {
+      "type": "datetime"
+    },
+    "customer_notes": {
+      "type": "richtext"
+    },
+    "progress_updates": {
+      "type": "json"
+    },
+    "payment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::payment.payment",
+      "mappedBy": "order"
+    },
+    "complaints": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::complaint.complaint",
+      "mappedBy": "order"
+    }
+  }
+}
